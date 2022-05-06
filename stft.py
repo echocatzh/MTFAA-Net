@@ -26,7 +26,7 @@ class STFT(nn.Module):
         inp: B N
         """
         cspec = th.stft(inp, self.nfft, self.hop, self.win,
-                        self.window.to(inp.device))
+                        self.window.to(inp.device),return_complex=False)
         cspec = einops.rearrange(cspec, "b f t c -> b c f t")
         return cspec
 
