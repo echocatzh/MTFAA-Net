@@ -26,7 +26,7 @@ class STFT(nn.Module):
         inp: B N
         """
         cspec = th.stft(inp, self.nfft, self.hop, self.win,
-                        self.window.to(inp.device),return_complex=False)
+                        self.window.to(inp.device),return_complex=False, center=False)
         cspec = einops.rearrange(cspec, "b f t c -> b c f t")
         return cspec
 
@@ -35,4 +35,4 @@ class STFT(nn.Module):
         real, imag: B F T
         """
         inp = th.stack([real, imag], dim=-1)
-        return th.istft(inp, self.nfft, self.hop, self.win, self.window.to(real.device))
+        return th.istft(inp, self.nfft, self.hop, self.win, self.window.to(real.device), center=False)
