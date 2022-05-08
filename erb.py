@@ -1,7 +1,6 @@
 """
 linear FBank instead of ERB scale.
 NOTE To to reduce the reconstruction error, the linear fbank is used.
-
 shmzhang@aslp-npu.org, 2022
 """
 
@@ -42,7 +41,7 @@ def test_bank():
     import soundfile as sf
     import numpy as np
     from stft import STFT
-    stft = STFT(32*48, 8*48, 32*48,)
+    stft = STFT(32*48, 8*48, 32*48, "hann")
     net = Banks(256, 32*48, 48000)
     sig_raw, sr = sf.read("path/to/48k.wav")
     sig = th.from_numpy(sig_raw)[None, :].float()
@@ -56,7 +55,7 @@ def test_bank():
     outs = outs.squeeze(dim=1)
     real = outs * th.cos(phase)
     imag = outs * th.sin(phase)
-    sig_rec = stft.istft(real, imag)
+    sig_rec = stft.inverse(real, imag)
     sig_rec = sig_rec.cpu().data.numpy()[0]
     min_len = min(len(sig_rec), len(sig_raw))
     sf.write("res.wav", np.stack(
