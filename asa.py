@@ -64,7 +64,7 @@ class ASA(nn.Module):
 
 
 def test_asa():
-    nnet = ASA(channels=64)
+    nnet = ASA(c=64)
     inp = th.randn(2, 64, 256, 100)
     out = nnet(inp)
     print('out: ', out.shape)
