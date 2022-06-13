@@ -35,8 +35,9 @@ class FU(nn.Module):
             nn.BatchNorm2d(cout),
             nn.PReLU(cout),
         )
+        #  22/06/13 update, add groups = 2
         self.conv3 = nn.Sequential(
-            nn.ConvTranspose2d(cout, cout, K, S, P, O),
+            nn.ConvTranspose2d(cout, cout, K, S, P, O, groups=2),
             nn.BatchNorm2d(cout),
             nn.PReLU(cout)
         )
