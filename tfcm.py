@@ -30,9 +30,10 @@ class TFCM_Block(nn.Module):
                 nn.PReLU(cin)
             )
         else:
+            # update 22/06/21, add groups for non-casual
             self.dila_conv = nn.Sequential(
                 nn.ConstantPad2d((dila_pad//2, dila_pad//2, 1, 1), 0.0),
-                nn.Conv2d(cin, cin, K, 1, dilation=(1, dila)),
+                nn.Conv2d(cin, cin, K, 1, dilation=(1, dila), groups=cin),
                 nn.BatchNorm2d(cin),
                 nn.PReLU(cin)
             )
