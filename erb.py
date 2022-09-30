@@ -13,7 +13,7 @@ class Banks(nn.Module):
     def __init__(self, nfilters, nfft, fs, low_freq=None, high_freq=None, learnable=False):
         super(Banks, self).__init__()
         self.nfilters, self.nfft, self.fs = nfilters, nfft, fs
-        filter = linear_fbanks.linear_filter_banks(
+        filter, _ = linear_fbanks.linear_filter_banks(
             nfilts=self.nfilters,
             nfft=self.nfft,
             low_freq=low_freq,
